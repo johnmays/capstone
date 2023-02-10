@@ -1,5 +1,5 @@
 # capstone
-CSDS 395 Senior Project/Capstone in Computer Science.  A web application for connection healthcare professionals.
+CSDS 395 Senior Project/Capstone in Computer Science.  A web application for connecting healthcare professionals.
 
 ### Team
 Original Idea proposed by [Mohammed Ahmad M.D.](https://www.linkedin.com/in/mohammed-ahmad-608b0117/)
