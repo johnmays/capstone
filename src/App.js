@@ -8,7 +8,7 @@ import { ProfileCreation } from "./profile/ProfileCreation";
 const App = () => {
 
 
-    const[currentForm, setCurrentForm] = useState('profile-creation');
+    const[currentForm, setCurrentForm] = useState('login');
     const[userName, setUserName] = useState('');
 
     const toggleForm = (formName) => {
