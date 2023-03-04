@@ -9,3 +9,11 @@
     border-radius: 10px; 
     height: 80px;
 }
+
+#loc-select{
+    margin: 5px;
+}
+
+.register-btn{
+    margin-top: 10px;
+}

@@ -1,5 +1,6 @@
 import "./profileStyle.css"
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+
 
 
 export const ProfileCreation = (props) => {
@@ -7,6 +8,15 @@ export const ProfileCreation = (props) => {
   const [currentskill, setCurrentskill] = useState('');
   const [skills, setskills] = useState([]);
   const [bio, setBio] = useState([]);
+  const [location, setLocation] = useState("");
+  const locationRef = useRef(null);
+
+  useEffect(() => {
+    const autocomplete = new window.google.maps.places.Autocomplete(locationRef.current);
+    autocomplete.addListener("place_changed", () => {
+      setLocation(autocomplete.getPlace().formatted_address);
+    });
+  }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -54,6 +64,13 @@ export const ProfileCreation = (props) => {
                             ))}
                         </ul>
                 </div>
+
+                <div>
+                  <form onSubmit={handleSubmit}>
+                    <input ref={locationRef} value={location} onChange={(e) => setLocation(e.target.value)} />
+                    <button id="loc-select" type="submit">Select</button>
+                  </form>
+              </div>
 
 
 
