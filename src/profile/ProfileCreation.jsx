@@ -3,28 +3,27 @@ import React, { useState } from "react";
 
 
 export const ProfileCreation = (props) => {
-    const [title, setTitle] = useState("");
-    //const [skills, setSkills] = useState("");
+  const [title, setTitle] = useState("");
+  const [currentskill, setCurrentskill] = useState('');
+  const [skills, setskills] = useState([]);
+  const [bio, setBio] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
     }
 
-    const [currentAnswer, setCurrentAnswer] = useState('');
-    const [answers, setAnswers] = useState([]);
-  
     const handleKeyDown = (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
-        if (currentAnswer.trim()) {
-          setAnswers(prevAnswers => [...prevAnswers, currentAnswer.trim()]);
-          setCurrentAnswer('');
+        if (currentskill.trim()) {
+          setskills(prevskills => [...prevskills, currentskill.trim()]);
+          setCurrentskill('');
         }
       }
     }
   
     const handleInputChange = (event) => {
-      setCurrentAnswer(event.target.value);
+      setCurrentskill(event.target.value);
     }
 
     
@@ -37,19 +36,21 @@ export const ProfileCreation = (props) => {
                 <label htmlFor="Title" >Title</label>
                 <input value={title} onChange={(e) => setTitle(e.target.value)} id="title" placeholder="Neurologist"></input>
 
+                <label htmlFor="bio">Bio:</label>
+                  <textarea id="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
                
                 <div>
-                    <label htmlFor="answers-input">Type your answers:</label>
+                    <label htmlFor="skills-input">Type your skills:</label>
                         <input 
-                            id="answers-input"
+                            id="skills-input"
                             type="text" 
-                            value={currentAnswer} 
+                            value={currentskill} 
                             onChange={handleInputChange}
                             onKeyDown={handleKeyDown}
                         />
                         <ul>
-                            {answers.map((answer, index) => (
-                            <li key={index}>{answer} </li>
+                            {skills.map((skill, index) => (
+                            <li key={index}>{skill} </li>
                             ))}
                         </ul>
                 </div>
@@ -59,9 +60,7 @@ export const ProfileCreation = (props) => {
                 <button className="register-btn" type="submit">Register</button>
                 <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Already have an account?</button>
             </form>
-            
-            
-
+        
         </div>
 
        
