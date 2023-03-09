@@ -2,7 +2,7 @@ var pg = require('pg');
 const express = require('express');
 const app = express();
 const port = 8050;
-var conString = "postgres://efmxpdls:o-PsenD3wAW8xT3v0sIsxFQiV491eVum@ziggy.db.elephantsql.com/efmxpdls" //Can be found in the Details page
+var conString = "" //Can be found in the Details page
 
 /*HTTP REQUEST METHODS */
 const clientConnect = () => {
