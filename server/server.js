@@ -11,6 +11,7 @@ const client = new Client({
 const express = require('express');
 const app = express();
 const port = 8050;
+var conString = "" //Can be found in the Details page
 
 /* HTTP REQUEST METHODS */
 const getUserById = (req, res) => {
