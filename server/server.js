@@ -1,23 +1,19 @@
 /* POSTGRES CLIENT SETUP */
 const { Client } = require('pg');
-const client = new Client({
-    host: 'ziggy.db.elephantsql.com',
-    user: 'efmxpdls',
-    password: 'o-PsenD3wAW8xT3v0sIsxFQiV491eVum',
-    database: 'efmxpdls'
-});
+const pg_config = require('./postgres_config.json')
+const client = new Client(pg_config);
 
 /* EXPRESS SERVER SETUP */
 const express = require('express');
 const app = express();
 const port = 8050;
-var conString = "" //Can be found in the Details page
 
 /* HTTP REQUEST METHODS */
 const getUserById = (req, res) => {
     const id = parseInt(req.params.id)
     const query = {
-        text: 'SELECT * FROM "user" WHERE user_id = $1;',
+        name: 'get_user',
+        text: 'SELECT * FROM "user" WHERE user_id = $1',
         values: [id]
     }
 
@@ -25,24 +21,43 @@ const getUserById = (req, res) => {
         if (err) {
             return console.error('error running query', err);
         }
-        console.log(`fetching id: ${id}`)
-        res.send(result)
+
+        // There should only be one row returned:
+        console.log(`Fetching id: ${id}...`)
+        res.send(result.rows[0])
     });
 }
 
 const createUser = (req, res) => {
-    const {id, first_name, middle_initial, last_name, email, profile_img, bio, city, state, zip, skills } = req.body
-    // JOSH
-    client.query(`INSERT INTO "user" values( ${id}, ${first_name}, ${middle_initial}, ${last_name}, ${email}, ${profile_img}, ${bio}, ${city}, ${state}, ${zip}, ${skills})`, (err, result) => {
+    const column_names = [
+        'first_name', 'middle_initial', 'last_name', 'email', 'profile_img', 'bio', 'city', 'state', 'zip', 'skills'
+    ];
+    const params = req.body;
+    const query_values = column_names.map(col => params[col]);
+
+    const query = {
+        name: 'create_user',
+        text: `INSERT INTO "user"(${column_names.join(',')})
+               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+               RETURNING *`,
+        values: query_values
+    }
+
+    client.query(query, (err, result) => {
         if(err) {
             return console.error('error running query', err);
         }
-        // res.send(result.rows[0].theTime);
-        console.log(`fetching id: ${id}`)
+
+        // An object representing the entire user is returned!
+        console.log(`Added user with ID ${result.rows[0].user_id}...`)
+        res.send(result.rows[0]);
     });
 }
 
-/*ENDPOINTS */
+/* MIDDLEWARE */
+app.use(express.json());
+
+/* ENDPOINTS */
 app.get('/getId/:id', (req, res) => {
     /*Endpoint to return user profile based on user id.*/
     getUserById(req, res);
