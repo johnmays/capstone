@@ -1,28 +1,28 @@
-var pg = require('pg');
+/* POSTGRES CLIENT SETUP */
+const { Client } = require('pg');
+const client = new Client({
+    host: 'ziggy.db.elephantsql.com',
+    user: 'efmxpdls',
+    password: 'o-PsenD3wAW8xT3v0sIsxFQiV491eVum',
+    database: 'efmxpdls'
+});
+
+/* EXPRESS SERVER SETUP */
 const express = require('express');
 const app = express();
 const port = 8050;
-var conString = "postgres://efmxpdls:o-PsenD3wAW8xT3v0sIsxFQiV491eVum@ziggy.db.elephantsql.com/efmxpdls" //Can be found in the Details page
 
-/*HTTP REQUEST METHODS */
-const clientConnect = () => {
-    var client = new pg.Client(conString);
-    client.connect(function(err) {
-        if(err) {
-            return console.error('could not connect to postgres', err);
-        }
-    });
-
-    return client
-}
-
+/* HTTP REQUEST METHODS */
 const getUserById = (req, res) => {
-    
     const id = parseInt(req.params.id)
-    // JOSH
-    client.query(`SELECT * from user where user_id = ${id}`, (err, result) => {  
-        if(err) {
-            return console.error('error runn{ing query', err);
+    const query = {
+        text: 'SELECT * FROM "user" WHERE user_id = $1;',
+        values: [id]
+    }
+
+    client.query(query, (err, result) => {  
+        if (err) {
+            return console.error('error running query', err);
         }
         console.log(`fetching id: ${id}`)
         res.send(result)
@@ -32,7 +32,7 @@ const getUserById = (req, res) => {
 const createUser = (req, res) => {
     const {id, first_name, middle_initial, last_name, email, profile_img, bio, city, state, zip, skills } = req.body
     // JOSH
-    client.query(`INSERT INTO user values( ${id}, ${first_name}, ${middle_initial}, ${last_name}, ${email}, ${profile_img}, ${bio}, ${city}, ${state}, ${zip}, ${skills})`, (err, result) => {
+    client.query(`INSERT INTO "user" values( ${id}, ${first_name}, ${middle_initial}, ${last_name}, ${email}, ${profile_img}, ${bio}, ${city}, ${state}, ${zip}, ${skills})`, (err, result) => {
         if(err) {
             return console.error('error running query', err);
         }
@@ -44,19 +44,22 @@ const createUser = (req, res) => {
 /*ENDPOINTS */
 app.get('/getId/:id', (req, res) => {
     /*Endpoint to return user profile based on user id.*/
-    client = clientConnect();
     getUserById(req, res);
-    client.end();
 })
 
 app.post('/createUser', (req, res) => {
     /*Endpoint to create a user record based on a json object. */
-    client = clientConnect();
     createUser(req, res);
-    client.end();
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    client.connect((err) => {
+        if (err) {
+            console.error('Database connection error', err.stack);
+            return;
+        }
+
+        console.log(`Database connection successful, listening on port ${port}...`)
+    });
 })
 
