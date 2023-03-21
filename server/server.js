@@ -28,9 +28,8 @@ const getUserById = (req, res) => {
     }
 
     client.query(query, (err, result) => {  
-        if (err) {
-            return console.error('error running query', err);
-        }
+        if (err)
+            res.status(500).send(err.message);
 
         // There should only be one row returned:
         console.log(`Fetching id: ${id}...`)
@@ -82,9 +81,8 @@ const createUser = (req, res) => {
     }
 
     client.query(query, (err, result) => {
-        if(err) {
-            return console.error('error running query', err);
-        }
+        if (err)
+            res.status(500).send(err.message);
 
         // An object representing the entire user is returned!
         console.log(`Added user with ID ${result.rows[0].user_id}...`)
@@ -122,7 +120,7 @@ const createCourse = (req, res) => {
 
     client.query(query, (err, result) => {
         if (err)
-            return console.error('error running query', err);
+            res.status(500).send(err.message);
 
         console.log(`Added course with ID ${result.rows[0].course_id}...`);
         res.send(result.rows[0]);
