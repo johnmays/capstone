@@ -191,6 +191,12 @@ const verifyCols = (body, required_cols, res) => {
 /* --------------------------------- */
 /*           HTTP ENDPOINTS          */
 /* --------------------------------- */
+
+app.get('/', (req, res) => {
+    /* Endpoint test without interacting with database. */
+    res.send("This app is online!")
+})
+
 app.get('/getUser/id/:id', (req, res) => {
     /* Endpoint to return user profile based on user id. */
     getUserById(req, res);
