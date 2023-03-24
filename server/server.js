@@ -11,6 +11,10 @@ const client = new Client(pg_config);
 const express = require('express');
 const app = express();
 const port = 8050;
+const cors = require('cors');
+app.use(cors({
+    origin: ['https://www.section.io', 'https://www.google.com/']
+}));
 
 /* --------------------------------- */
 /*       HTTP REQUEST METHODS        */
