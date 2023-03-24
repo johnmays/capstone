@@ -13,7 +13,7 @@ const app = express();
 const port = 8050;
 const cors = require('cors');
 app.use(cors({
-    origin: ['https://www.section.io', 'https://www.google.com/']
+    origin: '*'
 }));
 
 /* --------------------------------- */
