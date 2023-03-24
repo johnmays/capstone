@@ -1,0 +1,1 @@
+import "./profileStyle.css"

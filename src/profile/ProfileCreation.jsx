@@ -1,4 +1,5 @@
-import "./profileStyle.css"
+import "./profileStyle.css";
+import axios from 'axios';
 import React, { useState, useRef, useEffect } from "react";
 
 export const ProfileCreation = (props) => {
@@ -17,9 +18,46 @@ export const ProfileCreation = (props) => {
     });
   }, []);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const names = props.userName.split(" ");
+    const address = location.split(",");
+    const stateZip = address[2].split(" ");
+          
+    const user = {
+      first_name: names[0],
+      last_name: names[1],
+      email: props.userEmail,
+      profile_img: image,
+      bio: bio,
+      city: address[1],
+      state: stateZip[1],
+      zip: stateZip[2],
+      skills: Skills,
+    };
+  
+    let data = JSON.stringify(user);
+  
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/createUser',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+  
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        // go to profile view page
+      })
+      .catch((error) => {
+        console.log(error);
+        // console.error("There was an error creating the user:", error);
+      });
+  }
 
     const handleImageUpload = (event) => {
       const file = event.target.files[0];
@@ -72,9 +110,8 @@ export const ProfileCreation = (props) => {
                 </div>
 
                 <div>
-                  <label htmlFor="loc">Location: </label>
+                  <label htmlFor="loc">Address: </label>
                   <input ref={locationRef} value={location} onChange={(e) => setLocation(e.target.value)} />
-                  <button id="loc-select" type="submit">Select</button>
                </div>
 
                <div id="image-input">

@@ -18,9 +18,15 @@ export const Register = (props) => {
             if (!name) missingFields.push("name");
             alert(`Please fill in the following fields: ${missingFields.join(", ")}`);
           }
-        else props.onFormSwitch("profile-creation", {name});
+        else{
+            props.onFormSwitch("profile-creation", {name});
+        } 
     }
 
+    const passNameEmail = () => {
+        props.userName(name);
+        props.userEmail(email);
+    }
 
     return (
         <div className="auth-form-container">
@@ -36,7 +42,7 @@ export const Register = (props) => {
                 <label htmlFor="password">password</label>
                 <input className={submitted && !pass ? "empty" : ""} value={pass} onChange={(e) => setPass(e.target.value)} id="password" type="password" placeholder="********"/>
 
-                <button className="login-btn" type="submit" onClick={() => props.userName(name)}>Register</button>
+                <button className="login-btn" type="submit" onClick={() => passNameEmail()}>Register</button>
                 <button type="button" className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have an account?</button>
             </form>
         </div>   

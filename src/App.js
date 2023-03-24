@@ -7,9 +7,9 @@ import { ProfileCreation } from "./profile/ProfileCreation";
 
 const App = () => {
 
-
     const[currentForm, setCurrentForm] = useState('login');
     const[userName, setUserName] = useState('');
+    const[userEmail, setUserEmail] = useState('');
 
     const toggleForm = (formName) => {
         setCurrentForm(formName);
@@ -19,13 +19,17 @@ const App = () => {
         setUserName(userName);
     }
 
+    const getUserEmail = (userEmail) => {
+        setUserEmail(userEmail);
+    }
+
 
     return(
         <div className="App">
             {
                 currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : 
-                currentForm === 'register' ? <Register onFormSwitch={toggleForm} userName={getUserName}/> : 
-                currentForm === 'profile-creation' ? <ProfileCreation onFormSwitch={toggleForm} userName={userName}/> : null
+                currentForm === 'register' ? <Register onFormSwitch={toggleForm} userName={getUserName} userEmail={getUserEmail}/> : 
+                currentForm === 'profile-creation' ? <ProfileCreation onFormSwitch={toggleForm} userName={userName} userEmail={userEmail}/> : null
             }
             
         </div>
