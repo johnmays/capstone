@@ -17,12 +17,38 @@ app.use(cors({
 }));
 
 /* --------------------------------- */
+/*       SWAGGER DOCUMENTATION SETUP */
+/* --------------------------------- */
+const swaggerJSDoc = require('swagger-jsdoc')
+const swaggerUI = require('swagger-ui-express')
+
+const options = {
+    definition:{
+        openapi: '3.0.0',
+        info:{
+            title: 'HubHyve',
+            version: '1.0.0'
+        },
+        servers:[
+            {
+                url: 'http://localhost:8050/'
+            }
+        ]
+    },
+    apis: ['./server*.js']
+}
+
+const swaggerSpecification = swaggerJSDoc(options)
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecification))
+
+
+/* --------------------------------- */
 /*       HTTP REQUEST METHODS        */
 /* --------------------------------- */
 
-/**
- * Retrieves the entries of a user given their ID.
- */
+/*
+Retrieves a user based on ID
+*/
 const getUserById = (req, res) => {
     const id = parseInt(req.params.id)
     const query = {
@@ -196,10 +222,38 @@ const verifyCols = (body, required_cols, res) => {
 /*           HTTP ENDPOINTS          */
 /* --------------------------------- */
 
+/**
+ * @openapi
+ * /:
+ * get:
+ *  summary: test
+ *  description: test
+ *  responses: 
+ *      200:
+ *          description: test
+ * 
+ */
 app.get('/', (req, res) => {
     /* Endpoint test without interacting with database. */
     res.send("This app is online!")
 })
+/**
+ * @openapi
+ * /getUser/id/{id}:
+ * get:
+ *      summary: Retrieves the entries of a user given their ID.
+ *      description: Retrieves the entries of a user given their ID.
+ *      parameters:
+ *       - in: path
+ *         name: user_id
+ *         required: true
+ *         description: ID of the user to retrieve.
+ *         schema:
+ *           type: integer
+ *      responses: 
+ *          200:
+ *              description: User data succesfully retrieved from database
+ */
 
 app.get('/getUser/id/:id', (req, res) => {
     /* Endpoint to return user profile based on user id. */
