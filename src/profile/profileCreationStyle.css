@@ -74,9 +74,18 @@ ul {
     padding-top: 1px;
     padding-bottom: 2px;
     border-radius: 5px;
-    width: 12px;
   }
 
   #listed-skills{
     margin-top: 0px;
   }
+
+  #add-skill{
+    margin-left: 5px;
+  }
+  .empty{
+    outline: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+

@@ -29,7 +29,8 @@ export const Register = (props) => {
     }
 
     return (
-        <div className="auth-form-container">
+        <div id="gradient-bkg">
+             <div className="auth-form-container">
             <form className="register-form" onSubmit={handleSubmit}>
                 <h2>Registration</h2>
 
@@ -45,6 +46,9 @@ export const Register = (props) => {
                 <button className="login-btn" type="submit" onClick={() => passNameEmail()}>Register</button>
                 <button type="button" className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have an account?</button>
             </form>
-        </div>   
+        </div>
+
+        </div>
+          
     )
 }

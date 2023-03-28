@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import "./loginStyle.css";
 
 export const Login = (props) => {
     const [email, setEmail] = useState("");
@@ -20,23 +21,23 @@ export const Login = (props) => {
 
 
     return (
-        <div className="auth-form-container">
-            <form className="login-form" onSubmit={handleSubmit}>
-                <h2>Login</h2>
+        <div id="gradient-bkg">
+             <div className="auth-form-container">
+                <form className="login-form" onSubmit={handleSubmit}>
+                    <h2>Login</h2>
 
-                <label htmlFor="email">email</label>
-                <input className={submitted && !email ? "empty" : ""} value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" type="email" placeholder="abc123@email.com"/>
+                    <label htmlFor="email">email</label>
+                    <input className={submitted && !email ? "empty" : ""} value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" type="email" placeholder="abc123@email.com"/>
 
-                <label htmlFor="password">password</label>
-                <input className={submitted && !pass ? "empty" : ""} value={pass} onChange={(e) => setPass(e.target.value)} id="password" name="password" type="password" placeholder="********"/>
+                    <label htmlFor="password">password</label>
+                    <input className={submitted && !pass ? "empty" : ""} value={pass} onChange={(e) => setPass(e.target.value)} id="password" name="password" type="password" placeholder="********"/>
 
-                <button className="login-btn" type="submit">Log In</button>
-                <button type="button" className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account?</button>
-            </form>
-
-           
-            
+                    <button className="login-btn" type="submit">Log In</button>
+                    <button type="button" className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account?</button>
+                </form>
+            </div>
         </div>
+       
 
        
     )

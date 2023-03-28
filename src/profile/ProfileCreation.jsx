@@ -1,4 +1,4 @@
-import "./profileStyle.css";
+import "./profileCreationStyle.css";
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from "react";
 
@@ -10,6 +10,7 @@ export const ProfileCreation = (props) => {
   const [location, setLocation] = useState("");
   const locationRef = useRef(null);
   const [image, setImage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const autocomplete = new window.google.maps.places.Autocomplete(locationRef.current);
@@ -20,9 +21,15 @@ export const ProfileCreation = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitted(true);
+  
+    if (!location) {
+      alert("location is a required field");
+    }
+
     const names = props.userName.split(" ");
     const address = location.split(",");
-    const stateZip = address[2].split(" ");
+    const stateZip = address[1].split(" ");
           
     const user = {
       first_name: names[0],
@@ -30,9 +37,9 @@ export const ProfileCreation = (props) => {
       email: props.userEmail,
       profile_img: image,
       bio: bio,
-      city: address[1],
-      state: stateZip[1],
-      zip: stateZip[2],
+      city: address[0],
+      state: stateZip[0],
+      zip: stateZip[1],
       skills: Skills,
     };
   
@@ -71,14 +78,19 @@ export const ProfileCreation = (props) => {
     const handleKeyDown = (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
-        if (currentSkill.trim()) {
-          setSkills(prevSkills => [...prevSkills, currentSkill.trim()]);
-          setCurrentSkill('');
-        }
+        addSkill();
       }
     }
 
+    const addSkill = () => {
+      if (currentSkill.trim()) {
+        setSkills(prevSkills => [...prevSkills, currentSkill.trim()]);
+        setCurrentSkill('');
+      }
+    };
+
     return (
+      <div id="gradient-bkg">
         <div className="auth-form-container">
             <form className="register-form" onSubmit={handleSubmit}>
                 <h2 id="welcome-msg">Hello, {props.userName}</h2>
@@ -88,30 +100,31 @@ export const ProfileCreation = (props) => {
                 <input value={title} onChange={(e) => setTitle(e.target.value)} id="title" placeholder="Neurologist"></input>
 
                 <label htmlFor="bio">Bio:</label>
-                  <textarea id="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
+                  <textarea id="bio"  value={bio} onChange={(e) => setBio(e.target.value)} />
                
                   <div>
                     <label htmlFor="skills-input">Type your skills: </label>
                     <input 
                       id="skills-input"
-                      type="text" 
+                      type="text"
                       value={currentSkill} 
                       onChange={(e) => setCurrentSkill(e.target.value)}
                       onKeyDown={handleKeyDown}
                     />
+                    <button type="button" id="add-skill" onClick={(e) => { e.preventDefault(); addSkill() }}>add</button>
                     <ul id="listed-skills">
                       {Skills.map((Skill, index) => (
                         <li key={index}>
                           {Skill} 
-                          <button onClick={() => setSkills(prevSkills => prevSkills.filter((_, i) => i !== index))}>x</button>
+                          <button type="button" onClick={() => setSkills(prevSkills => prevSkills.filter((_, i) => i !== index))}>remove</button>
                         </li>
                       ))}
                     </ul>
                 </div>
 
                 <div>
-                  <label htmlFor="loc">Address: </label>
-                  <input ref={locationRef} value={location} onChange={(e) => setLocation(e.target.value)} />
+                  <label htmlFor="loc">Location: </label>
+                  <input className={submitted && !location ? "empty" : ""} ref={locationRef} placeholder="zip city, state, country" value={location} onChange={(e) => setLocation(e.target.value)} />
                </div>
 
                <div id="image-input">
@@ -126,12 +139,13 @@ export const ProfileCreation = (props) => {
                 )}
               </div>
               
-                <button className="register-btn" type="submit">Register</button>
+                <button onClick={() => props.onFormSwitch("profile-view")} className="register-btn" type="submit">Register</button>
             </form>
         
         </div>
 
-       
+      </div>
+
     )
 }
 
