@@ -32,11 +32,13 @@ const getUserById = (req, res) => {
     };
 
     client.query(query, (err, result) => {  
-        if (err)
+        if (err) {
             res.status(500).send(err.message);
-
-        // There should only be one row returned:
-        res.send(result.rows[0])
+        } else {
+            // There should only be one row returned:
+            res.send(result.rows[0])
+        }
+        
     });
 }
 
@@ -75,24 +77,27 @@ const createUser = (req, res) => {
     ];
 
     const params = req.body;
-    verifyCols(params, requiredCols, res);
-
-    const queryVals = columnNames.map(col => params[col]);
-    const query = {
-        name: 'create_user',
-        text: `INSERT INTO "user"(${columnNames.join(',')})
-               VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-               RETURNING *`,
-        values: queryVals
-    };
-
-    client.query(query, (err, result) => {
-        if (err)
-            res.status(500).send(err.message);
-
-        // An object representing the entire user is returned!
-        res.send(result.rows[0]);
-    });
+    const colsVerified = verifyCols(params, requiredCols, res);
+    if (colsVerified) {
+        const queryVals = columnNames.map(col => params[col]);
+        const query = {
+            name: 'create_user',
+            text: `INSERT INTO "user"(${columnNames.join(',')})
+                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                   RETURNING *`,
+            values: queryVals
+        };
+    
+        client.query(query, (err, result) => {
+            if (err) {
+                res.status(500).send(err.message);
+            } else {
+                // An object representing the entire user is returned!
+                res.send(result.rows[0]);
+            }
+        });
+    }
+    
 }
 
 /**
@@ -112,22 +117,27 @@ const createCourse = (req, res) => {
     ];
 
     const params = req.body;
-    verifyCols(params, required_cols, res);
+    const colsVerified = verifyCols(params, required_cols, res);
 
-    const queryVals = columnNames.map(col => params[col]);
-    const query = {
-        name: 'create_course',
-        text: `INSERT INTO course(${columnNames.join(',')})
-               VALUES ($1, $2, $3, $4, $5)
-               RETURNING *`,
-        values: queryVals
-    };
-
-    client.query(query, (err, result) => {
-        if (err)
-            res.status(500).send(err.message);
-        res.send(result.rows[0]);
-    });
+    if (colsVerified) {
+        const queryVals = columnNames.map(col => params[col]);
+        const query = {
+            name: 'create_course',
+            text: `INSERT INTO course(${columnNames.join(',')})
+                   VALUES ($1, $2, $3, $4, $5)
+                   RETURNING *`,
+            values: queryVals
+        };
+    
+        client.query(query, (err, result) => {
+            if (err) {
+                res.status(500).send(err.message);
+            } else {
+                res.send(result.rows[0]);
+            }
+        });
+    }
+    
 }
 
 /**
@@ -142,9 +152,11 @@ const getCourseById = (req, res) => {
     };
 
     client.query(query, (err, result) => {  
-        if (err)
+        if (err) {
             res.status(500).send(err.message);
-        res.send(result.rows[0]);
+        } else {
+            res.send(result.rows[0]);
+        }
     });
 }
 
@@ -164,9 +176,11 @@ const getCoursesByField = (req, res) => {
     };
 
     client.query(query, (err, result) => {
-        if (err)
+        if (err) {
             res.status(500).send(err.message);
-        res.send(result.rows);
+        } else {
+            res.send(result.rows);
+        }
     });
 }
 
@@ -190,6 +204,8 @@ const verifyCols = (body, required_cols, res) => {
     let missing_cols = required_cols.filter(col => body[col] == null);
     if (missing_cols.length)
         res.status(400).send(`Missing columns: ${missing_cols.join(' ,')}`);
+        return false;
+    return true;
 }
 
 /* --------------------------------- */
