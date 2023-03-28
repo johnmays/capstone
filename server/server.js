@@ -228,9 +228,10 @@ app.use(express.json());
  */
 const verifyCols = (body, required_cols, res) => {
     let missing_cols = required_cols.filter(col => body[col] == null);
-    if (missing_cols.length)
+    if (missing_cols.length) {
         res.status(400).send(`Missing columns: ${missing_cols.join(' ,')}`);
         return false;
+    }
     return true;
 }
 
