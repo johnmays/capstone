@@ -85,18 +85,18 @@ h1, h3, p{
     position: relative;
   }
 
-  #courses-container h1{
+  #v-courses-container h1{
     text-align: center;
     margin-bottom: 5px;
     margin-top: 5px;
   }
 
-  #courses-container h3{
+  #v-courses-container h3{
     margin-bottom: 5px;
     margin-top: 5px;
   }
 
-  #courses-container{
+  #v-courses-container{
     padding: 8px;
     background-color: rgba(128,128,128,0.4);
     border-radius: 10px;
@@ -107,20 +107,20 @@ h1, h3, p{
     padding-right: 70px;
   }
 
-  #course-listings{
+  #v-course-listings{
     height: 135px; 
     overflow: auto;
     padding-right: 70px;
   }
 
-  .course{
+  .v-course{
     border: 2px solid white;
     padding: 2px;
     border-radius: 10px;
 
   }
 
-  #course-labels{
+  #v-course-labels{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -128,7 +128,7 @@ h1, h3, p{
     padding-left: 70px;
   }
 
-  #course-body{
+  #v-course-body{
     border: 1px solid white;
     border-radius: 10px;
     margin-bottom: 15px;

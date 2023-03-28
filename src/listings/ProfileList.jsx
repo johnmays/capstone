@@ -73,7 +73,7 @@ export const ProfileList = (props) => {
                     <img class="badge" src="https://upload.wikimedia.org/wikipedia/en/thumb/8/87/World_Scout_Emblem_1955.svg/1200px-World_Scout_Emblem_1955.svg.png" ></img>
                     <img class="badge" src="https://upload.wikimedia.org/wikipedia/en/0/0c/Boy_Scouts_of_the_Philippines.svg" ></img>
                 </div>
-                <div id="view-button">
+                <div onClick={() => props.onFormSwitch("profile-view")} id="view-button">
                   <h2><center>View {profile.first_name}'s Profile</center></h2>
                 </div>
                 </div>

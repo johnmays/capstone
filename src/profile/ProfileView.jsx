@@ -67,23 +67,23 @@ export const ProfileView = () => {
 
         </div>
        
-        <div id="courses-container" >
+        <div id="v-courses-container" >
             <h1> Course Offerings</h1>
 
-            <div id="course-body">
-                <div id="course-labels">
+            <div id="v-course-body">
+                <div id="v-course-labels">
                     <h3>Title</h3>
                     <h3>Address</h3>
                     <h3>Time</h3>
                 </div>
                 
-                <div id="course-listings"> 
+                <div id="v-course-listings"> 
                 <ul>
-                    <li class="course">How to remove brain</li>
-                    <li class="course">How to get fake doctor lisence</li>
-                    <li class="course">How to win claw machine everytime (not click bait)</li>
-                    <li class="course">Best Belly scratches for beginners</li>
-                    <li class="course">Course 5</li>
+                    <li class="v-course">How to remove brain</li>
+                    <li class="v-course">How to get fake doctor lisence</li>
+                    <li class="v-course">How to win claw machine everytime (not click bait)</li>
+                    <li class="v-course">Best Belly scratches for beginners</li>
+                    <li class="v-course">Course 5</li>
 
                 </ul>
                 </div>
