@@ -133,3 +133,20 @@ h1, h3, p{
     border-radius: 10px;
     margin-bottom: 15px;
   }
+
+  #bio-cont{
+    width: 50%;
+  }
+
+  #edit-profile-cont{
+    width: 200px; /* adjust the width to your liking */
+    margin: 0 auto;
+  }
+
+  #edit-profile-button{
+    border: solid 2px white;
+  }
+
+  #edit-profile-cont:hover{
+    cursor: pointer;
+  }

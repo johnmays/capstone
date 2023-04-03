@@ -24,8 +24,8 @@ export const Register = (props) => {
     }
 
     const passNameEmail = () => {
-        props.userName(name);
-        props.userEmail(email);
+        props.setUserName(name);
+        props.setUserEmail(email);
     }
 
     return (

@@ -13,7 +13,12 @@ export const ProfileCreation = (props) => {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    const autocomplete = new window.google.maps.places.Autocomplete(locationRef.current);
+    const options = {
+      componentRestrictions: { country: 'us' }, 
+      types: ['postal_code', 'locality', 'administrative_area_level_1']
+    };
+    
+    const autocomplete = new window.google.maps.places.Autocomplete(locationRef.current, options);
     autocomplete.addListener("place_changed", () => {
       setLocation(autocomplete.getPlace().formatted_address);
     });
@@ -29,7 +34,9 @@ export const ProfileCreation = (props) => {
 
     const names = props.userName.split(" ");
     const address = location.split(",");
-    const stateZip = address[1].split(" ");
+    console.log(address);
+    const stateZip = address[1].trim().split(" ");
+    console.log(stateZip);
           
     const user = {
       first_name: names[0],
@@ -58,11 +65,11 @@ export const ProfileCreation = (props) => {
     axios.request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
-        // go to profile view page
+        props.setUserId(response.data.user_id);
+        props.onFormSwitch("profile-view");
       })
       .catch((error) => {
         console.log(error);
-        // console.error("There was an error creating the user:", error);
       });
   }
 
@@ -139,7 +146,7 @@ export const ProfileCreation = (props) => {
                 )}
               </div>
               
-                <button onClick={() => props.onFormSwitch("profile-view")} className="register-btn" type="submit">Register</button>
+                <button className="register-btn" type="submit">Register</button>
             </form>
         
         </div>

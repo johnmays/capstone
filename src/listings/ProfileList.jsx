@@ -5,6 +5,11 @@ import axios from "axios";
 export const ProfileList = (props) => {
   const [data, setData] = useState([]);
 
+  const viewProfile = (id) => {
+    props.onFormSwitch("profile-view");
+    props.setUserId(id);
+  }  
+
   useEffect(() => {
     const urls = [
       "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/1",
@@ -29,7 +34,7 @@ export const ProfileList = (props) => {
       <div id="bkg-profile-view">
         <ul>
           {data.map(profile => (
-            <li key={profile.id}>
+            <li key={profile.user_id}>
               <div id="profile-box" class="contianer-fluid">
                 <div id="profile-bar" class="contianer-fluid">
                 <div>
@@ -56,10 +61,10 @@ export const ProfileList = (props) => {
                 
                 <div id="course-listings"> 
                 <ul>
-                    <li class="course">How to remove brain</li>
-                    <li class="course">How to get fake doctor lisence</li>
-                    <li class="course">How to win claw machine everytime (not click bait)</li>
-                    <li class="course">Best Belly scratches for beginners</li>
+                    <li class="course">Course 1</li>
+                    <li class="course">Course 2</li>
+                    <li class="course">Course 3</li>
+                    <li class="course">Course 4</li>
                     <li class="course">Course 5</li>
 
                 </ul>
@@ -73,7 +78,7 @@ export const ProfileList = (props) => {
                     <img class="badge" src="https://upload.wikimedia.org/wikipedia/en/thumb/8/87/World_Scout_Emblem_1955.svg/1200px-World_Scout_Emblem_1955.svg.png" ></img>
                     <img class="badge" src="https://upload.wikimedia.org/wikipedia/en/0/0c/Boy_Scouts_of_the_Philippines.svg" ></img>
                 </div>
-                <div onClick={() => props.onFormSwitch("profile-view")} id="view-button">
+                <div onClick={() => viewProfile(profile.user_id)} id="view-button">
                   <h2><center>View {profile.first_name}'s Profile</center></h2>
                 </div>
                 </div>

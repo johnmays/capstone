@@ -11,27 +11,32 @@ const App = () => {
     const[currentForm, setCurrentForm] = useState('login');
     const[userName, setUserName] = useState('');
     const[userEmail, setUserEmail] = useState('');
+    const[userId, setUserId] = useState('');
 
     const toggleForm = (formName) => {
         setCurrentForm(formName);
     } 
 
-    const getUserName = (userName) => {
-        setUserName(userName);
+    const getUserName = (name) => {
+        setUserName(name);
     }
 
-    const getUserEmail = (userEmail) => {
-        setUserEmail(userEmail);
+    const getUserEmail = (email) => {
+        setUserEmail(email);
+    }
+
+    const getUserId = (id) => {
+        setUserId(id);
     }
 
     return(
         <div className="App">
             {
                 currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : 
-                currentForm === 'register' ? <Register onFormSwitch={toggleForm} userName={getUserName} userEmail={getUserEmail}/> : 
-                currentForm === 'profile-creation' ? <ProfileCreation onFormSwitch={toggleForm} userName={userName} userEmail={userEmail}/> : 
-                currentForm === 'profile-view' ? <ProfileView onFormSwitch={toggleForm}/> :
-                currentForm === 'profile-list' ? <ProfileList onFormSwitch={toggleForm}/> : null
+                currentForm === 'register' ? <Register onFormSwitch={toggleForm} setUserName={getUserName} setUserEmail={getUserEmail}/> : 
+                currentForm === 'profile-creation' ? <ProfileCreation setUserId={getUserId} onFormSwitch={toggleForm} userName={userName} userEmail={userEmail}/> : 
+                currentForm === 'profile-view' ? <ProfileView onFormSwitch={toggleForm} userId={userId} /> :
+                currentForm === 'profile-list' ? <ProfileList setUserId={getUserId} onFormSwitch={toggleForm}/> : null
             }
             
         </div>
