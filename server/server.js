@@ -1,9 +1,9 @@
 /* --------------------------------- */
 /*       POSTGRES CLIENT SETUP       */
 /* --------------------------------- */
-const { Client } = require('pg');
+const { Pool } = require('pg');
 const pg_config = require('./postgres_config.json')
-const client = new Client(pg_config);
+const pool = new Pool(pg_config);
 
 /* --------------------------------- */
 /*        EXPRESS SERVER SETUP       */
@@ -35,7 +35,7 @@ const options = {
             }
         ]
     },
-    apis: ['./server*.js']
+    apis: ['capstone/server/server.js']
 }
 
 const swaggerSpecification = swaggerJSDoc(options)
@@ -57,7 +57,7 @@ const getUserById = (req, res) => {
         values: [id]
     };
 
-    client.query(query, (err, result) => {  
+    pool.query(query, (err, result) => {  
         if (err) {
             res.status(500).send(err.message);
         } else {
@@ -114,7 +114,7 @@ const createUser = (req, res) => {
             values: queryVals
         };
     
-        client.query(query, (err, result) => {
+        pool.query(query, (err, result) => {
             if (err) {
                 res.status(500).send(err.message);
             } else {
@@ -155,7 +155,7 @@ const createCourse = (req, res) => {
             values: queryVals
         };
     
-        client.query(query, (err, result) => {
+        pool.query(query, (err, result) => {
             if (err) {
                 res.status(500).send(err.message);
             } else {
@@ -177,7 +177,7 @@ const getCourseById = (req, res) => {
         values: [id]
     };
 
-    client.query(query, (err, result) => {  
+    pool.query(query, (err, result) => {  
         if (err) {
             res.status(500).send(err.message);
         } else {
@@ -201,7 +201,7 @@ const getCoursesByField = (req, res) => {
         values: [field]
     };
 
-    client.query(query, (err, result) => {
+    pool.query(query, (err, result) => {
         if (err) {
             res.status(500).send(err.message);
         } else {
@@ -228,10 +228,9 @@ app.use(express.json());
  */
 const verifyCols = (body, required_cols, res) => {
     let missing_cols = required_cols.filter(col => body[col] == null);
-    if (missing_cols.length) {
+    if (missing_cols.length)
         res.status(400).send(`Missing columns: ${missing_cols.join(' ,')}`);
         return false;
-    }
     return true;
 }
 
@@ -298,7 +297,7 @@ app.post('/createCourse', (req, res) => {
 })
 
 app.listen(port, () => {
-    client.connect((err) => {
+    pool.connect((err) => {
         if (err) {
             console.error('Database connection error', err.stack);
             return;
