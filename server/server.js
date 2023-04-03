@@ -68,6 +68,25 @@ const getUserById = (req, res) => {
     });
 }
 
+const deleteUser = (req, res) => {
+    const id = parseInt(req.params.id)
+    const query = {
+        name: 'delete_user_by_id',
+        text: 'DELETE FROM "user" WHERE user_id = $1 RETURNING user_id',
+        values: [id]
+    };
+
+    pool.query(query, (err, result) => {  
+        if (err) {
+            res.status(500).send(err.message);
+        } else {
+            // There should only be one row returned:
+            res.send(result.rows[0])
+        }
+        
+    });
+}
+
 /**
  * Creates a user given a JSON-formatted sequence
  * associating columns/attributes with their values. Only
@@ -174,6 +193,23 @@ const getCourseById = (req, res) => {
     const query = {
         name: 'get_course_from_id',
         text: 'SELECT * FROM course WHERE course_id = $1',
+        values: [id]
+    };
+
+    pool.query(query, (err, result) => {  
+        if (err) {
+            res.status(500).send(err.message);
+        } else {
+            res.send(result.rows[0]);
+        }
+    });
+}
+
+const deleteCourse = (req, res) => {
+    const id = parseInt(req.params.id)
+    const query = {
+        name: 'delete_course_by_id',
+        text: 'DELETE FROM course WHERE course_id = $1 RETURNING course_id',
         values: [id]
     };
 
@@ -294,6 +330,16 @@ app.get('/getCourse/field/:field', (req, res) => {
 app.post('/createCourse', (req, res) => {
     /* Endpoint to create a course record based on a json object. */
     createCourse(req, res);
+})
+
+app.delete('/deleteUser/id/:id', (req, res) => {
+    /* Endpoint to delete a user by ID */
+    deleteUser(req, res);
+})
+
+app.delete('/deleteCourse/id/:id', (req, res) => {
+    /* Endpoint to delete a course by ID */
+    deleteCourse(req, res);
 })
 
 app.listen(port, () => {
