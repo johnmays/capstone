@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link, Routes, Route } from "react-router-dom";
+
 import { Login } from "./login/Login";
 import { Register } from "./login/Register";
 import { ProfileCreation } from "./profile/ProfileCreation";
@@ -31,17 +33,23 @@ const App = () => {
     }
 
     return(
-        <div className="App">
-            {
-                currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : 
-                currentForm === 'register' ? <Register onFormSwitch={toggleForm} setUserName={getUserName} setUserEmail={getUserEmail}/> : 
-                currentForm === 'profile-creation' ? <ProfileCreation setUserId={getUserId} onFormSwitch={toggleForm} userName={userName} userEmail={userEmail}/> : 
-                currentForm === 'profile-view' ? <ProfileView onFormSwitch={toggleForm} userId={userId} /> :
-                currentForm === 'profile-list' ? <ProfileList setUserId={getUserId} onFormSwitch={toggleForm}/> :
-                currentForm === 'course-list' ? <CourseList onFormSwitch={toggleForm}/> : null
-            }
-            
-        </div>
+        <Routes>
+            <Route path="/" element={
+                <div className="App">
+                {
+                    currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : 
+                    currentForm === 'register' ? <Register onFormSwitch={toggleForm} setUserName={getUserName} setUserEmail={getUserEmail}/> : 
+                    currentForm === 'profile-creation' ? <ProfileCreation setUserId={getUserId} onFormSwitch={toggleForm} userName={userName} userEmail={userEmail}/> : 
+                    currentForm === 'profile-view' ? <ProfileView onFormSwitch={toggleForm} userId={userId} /> :
+                    currentForm === 'profile-list' ? <ProfileList setUserId={getUserId} onFormSwitch={toggleForm}/> :
+                    currentForm === 'course-list' ? <CourseList onFormSwitch={toggleForm}/> : null
+                }
+                
+                </div>
+            }/>
+            <Route path="/courses" element={ CourseList }/>
+            <Route path="/profiles" element={ ProfileList }/>
+        </Routes>
     );
 }
 
