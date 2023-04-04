@@ -122,8 +122,7 @@ const createUser = (req, res) => {
     ];
 
     const params = req.body;
-    const colsVerified = verifyCols(params, requiredCols, res);
-    if (colsVerified) {
+    if (verifyCols(params, requiredCols, res)) {
         const queryVals = columnNames.map(col => params[col]);
         const query = {
             name: 'create_user',
@@ -162,9 +161,7 @@ const createCourse = (req, res) => {
     ];
 
     const params = req.body;
-    const colsVerified = verifyCols(params, required_cols, res);
-
-    if (colsVerified) {
+    if (verifyCols(params, requiredCols, res)) {
         const queryVals = columnNames.map(col => params[col]);
         const query = {
             name: 'create_course',
@@ -264,9 +261,10 @@ app.use(express.json());
  */
 const verifyCols = (body, required_cols, res) => {
     let missing_cols = required_cols.filter(col => body[col] == null);
-    if (missing_cols.length)
+    if (missing_cols.length) {
         res.status(400).send(`Missing columns: ${missing_cols.join(' ,')}`);
         return false;
+    }
     return true;
 }
 
