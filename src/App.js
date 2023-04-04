@@ -4,6 +4,7 @@ import { Register } from "./login/Register";
 import { ProfileCreation } from "./profile/ProfileCreation";
 import { ProfileView } from "./profile/ProfileView";
 import { ProfileList } from "./listings/ProfileList";
+import { CourseList } from "./listings/CourseList";
 
 
 const App = () => {
@@ -36,7 +37,8 @@ const App = () => {
                 currentForm === 'register' ? <Register onFormSwitch={toggleForm} setUserName={getUserName} setUserEmail={getUserEmail}/> : 
                 currentForm === 'profile-creation' ? <ProfileCreation setUserId={getUserId} onFormSwitch={toggleForm} userName={userName} userEmail={userEmail}/> : 
                 currentForm === 'profile-view' ? <ProfileView onFormSwitch={toggleForm} userId={userId} /> :
-                currentForm === 'profile-list' ? <ProfileList setUserId={getUserId} onFormSwitch={toggleForm}/> : null
+                currentForm === 'profile-list' ? <ProfileList setUserId={getUserId} onFormSwitch={toggleForm}/> :
+                currentForm === 'course-list' ? <CourseList onFormSwitch={toggleForm}/> : null
             }
             
         </div>
