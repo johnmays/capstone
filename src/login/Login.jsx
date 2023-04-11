@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./loginStyle.css";
 
 export const Login = (props) => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [submitted, setSubmitted] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         setSubmitted(true);
@@ -32,7 +35,7 @@ export const Login = (props) => {
                     <input className={submitted && !pass ? "empty" : ""} value={pass} onChange={(e) => setPass(e.target.value)} id="password" name="password" type="password" placeholder="********"/>
 
                     <button className="login-btn" type="submit" onClick={() => props.onFormSwitch('course-list')}>Log In</button>
-                    <button type="button" className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account?</button>
+                    <button type="button" className="link-btn" onClick={()=>navigate('/register')}>Don't have an account?</button>
                 </form>
             </div>
         </div>

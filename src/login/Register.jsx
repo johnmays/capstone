@@ -1,11 +1,14 @@
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Register = (props) => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [name, setName] = useState("");
     const [submitted, setSubmitted] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,7 +47,7 @@ export const Register = (props) => {
                 <input className={submitted && !pass ? "empty" : ""} value={pass} onChange={(e) => setPass(e.target.value)} id="password" type="password" placeholder="********"/>
 
                 <button className="login-btn" type="submit" onClick={() => passNameEmail()}>Register</button>
-                <button type="button" className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have an account?</button>
+                <button type="button" className="link-btn" onClick={() => navigate('/login')}>Already have an account?</button>
             </form>
         </div>
 

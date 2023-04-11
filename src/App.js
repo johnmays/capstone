@@ -54,7 +54,7 @@ const App = () => {
             <Route path="/createprofile" element={ <ProfileCreation/> }/>
             <Route path="/courses" element={ <CourseList/> }/>
             <Route path="/profiles" element={ <ProfileList/> }/>
-            {/*<Route path="/profile" element={ <ProfileList/> }/> no good way to do profiles yet*/}
+            {/*<Route path="/profile/:id" element={ <ProfileList/> }/> eventually: dynamic route for individual profiles*/}
         </Routes>
     );
 }

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./profileViewStyle.css";
 import axios from 'axios';
 
 
 export const ProfileView = (props) => {
     const [userData, setData] = useState({ skills: [] });
+    const { id } = useParams() // will return id element in URL
 
     useEffect(() => {
         const url = "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/" + props.userId;
