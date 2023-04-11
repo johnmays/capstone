@@ -26,7 +26,7 @@ export const Login = (props) => {
                     <h2>Login</h2>
 
                     <label htmlFor="email">email</label>
-                    <input className={submitted && !email ? "empty" : ""} value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" type="email" placeholder="abc123@email.com"/>
+                    <input className={submitted && !email ? "empty" : ""} value={email} onChange={(e) => setEmail(e.target.value)} id="email" name="email" type="email" placeholder="example@email.com"/>
 
                     <label htmlFor="password">password</label>
                     <input className={submitted && !pass ? "empty" : ""} value={pass} onChange={(e) => setPass(e.target.value)} id="password" name="password" type="password" placeholder="********"/>

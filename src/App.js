@@ -34,7 +34,8 @@ const App = () => {
 
     return(
         <Routes>
-            <Route path="/" element={
+            <Route path="/" element={ <Login/> }/>
+            <Route path="/og" element={
                 <div className="App">
                 {
                     currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : 
@@ -47,8 +48,13 @@ const App = () => {
                 
                 </div>
             }/>
-            <Route path="/courses" element={ CourseList }/>
-            <Route path="/profiles" element={ ProfileList }/>
+
+            <Route path="/login" element={ <Login/> }/>
+            <Route path="/register" element={ <Register/> }/>
+            <Route path="/createprofile" element={ <ProfileCreation/> }/>
+            <Route path="/courses" element={ <CourseList/> }/>
+            <Route path="/profiles" element={ <ProfileList/> }/>
+            {/*<Route path="/profile" element={ <ProfileList/> }/> no good way to do profiles yet*/}
         </Routes>
     );
 }
