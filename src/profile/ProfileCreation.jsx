@@ -1,6 +1,7 @@
 import "./profileCreationStyle.css";
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export const ProfileCreation = (props) => {
   const [title, setTitle] = useState("");
@@ -11,6 +12,8 @@ export const ProfileCreation = (props) => {
   const locationRef = useRef(null);
   const [image, setImage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  const locState = useLocation();
 
   useEffect(() => {
     const options = {
@@ -32,7 +35,7 @@ export const ProfileCreation = (props) => {
       alert("location is a required field");
     }
 
-    const names = props.userName.split(" ");
+    const names = locState.state.name.split(" ");
     const address = location.split(",");
     console.log(address);
     const stateZip = address[1].trim().split(" ");
@@ -100,7 +103,7 @@ export const ProfileCreation = (props) => {
       <div id="gradient-bkg">
         <div className="auth-form-container">
             <form className="register-form" onSubmit={handleSubmit}>
-                <h2 id="welcome-msg">Hello, {props.userName}</h2>
+                <h2 id="welcome-msg">Hello, {locState.state.name}</h2>
                 <h3 id="welcome-sub">Tell us know more about yourself.</h3>
               
                 <label htmlFor="Title" >Title:</label>

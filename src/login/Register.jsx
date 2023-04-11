@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 export const Register = (props) => {
     const [email, setEmail] = useState("");
@@ -22,7 +22,10 @@ export const Register = (props) => {
             alert(`Please fill in the following fields: ${missingFields.join(", ")}`);
           }
         else{
-            props.onFormSwitch("profile-creation", {name});
+            //props.onFormSwitch("profile-creation", {name});
+            //<Navigate to='/createprofile'/>
+            //, state={name}
+            navigate('/createprofile', {state:{name:'fart'}})
         } 
     }
 
@@ -33,25 +36,23 @@ export const Register = (props) => {
 
     return (
         <div id="gradient-bkg">
-             <div className="auth-form-container">
-            <form className="register-form" onSubmit={handleSubmit}>
-                <h2>Registration</h2>
+            <div className="auth-form-container">
+                <form className="register-form" onSubmit={handleSubmit}>
+                    <h2>Registration</h2>
 
-                <label htmlFor="name" >full name</label>
-                <input className={submitted && !name ? "empty" : ""} value={name} onChange={(e) => setName(e.target.value)} id="name" placeholder="Joe Shmoe"></input>
+                    <label htmlFor="name" >full name</label>
+                    <input className={submitted && !name ? "empty" : ""} value={name} onChange={(e) => setName(e.target.value)} id="name" placeholder="Joe Shmoe"></input>
 
-                <label htmlFor="email">email</label>
-                <input className={submitted && !email ? "empty" : ""} value={email} onChange={(e) => setEmail(e.target.value)} id="email" type="email" placeholder="abc123@email.com"/>
+                    <label htmlFor="email">email</label>
+                    <input className={submitted && !email ? "empty" : ""} value={email} onChange={(e) => setEmail(e.target.value)} id="email" type="email" placeholder="example@email.com"/>
 
-                <label htmlFor="password">password</label>
-                <input className={submitted && !pass ? "empty" : ""} value={pass} onChange={(e) => setPass(e.target.value)} id="password" type="password" placeholder="********"/>
+                    <label htmlFor="password">password</label>
+                    <input className={submitted && !pass ? "empty" : ""} value={pass} onChange={(e) => setPass(e.target.value)} id="password" type="password" placeholder="********"/>
 
-                <button className="login-btn" type="submit" onClick={() => passNameEmail()}>Register</button>
-                <button type="button" className="link-btn" onClick={() => navigate('/login')}>Already have an account?</button>
-            </form>
-        </div>
-
-        </div>
-          
+                    <button className="login-btn" type="submit" onClick={() => passNameEmail()}>Register</button>
+                    <button type="button" className="link-btn" onClick={() => navigate('/login')}>Already have an account?</button>
+                </form>
+            </div>
+        </div>       
     )
 }

@@ -11,14 +11,9 @@ import { CourseList } from "./listings/CourseList";
 
 const App = () => {
 
-    const[currentForm, setCurrentForm] = useState('login');
     const[userName, setUserName] = useState('');
     const[userEmail, setUserEmail] = useState('');
     const[userId, setUserId] = useState('');
-
-    const toggleForm = (formName) => {
-        setCurrentForm(formName);
-    } 
 
     const getUserName = (name) => {
         setUserName(name);
@@ -35,26 +30,12 @@ const App = () => {
     return(
         <Routes>
             <Route path="/" element={ <Login/> }/>
-            <Route path="/og" element={
-                <div className="App">
-                {
-                    currentForm === 'login' ? <Login onFormSwitch={toggleForm} /> : 
-                    currentForm === 'register' ? <Register onFormSwitch={toggleForm} setUserName={getUserName} setUserEmail={getUserEmail}/> : 
-                    currentForm === 'profile-creation' ? <ProfileCreation setUserId={getUserId} onFormSwitch={toggleForm} userName={userName} userEmail={userEmail}/> : 
-                    currentForm === 'profile-view' ? <ProfileView onFormSwitch={toggleForm} userId={userId} /> :
-                    currentForm === 'profile-list' ? <ProfileList setUserId={getUserId} onFormSwitch={toggleForm}/> :
-                    currentForm === 'course-list' ? <CourseList onFormSwitch={toggleForm}/> : null
-                }
-                
-                </div>
-            }/>
-
             <Route path="/login" element={ <Login/> }/>
             <Route path="/register" element={ <Register/> }/>
             <Route path="/createprofile" element={ <ProfileCreation/> }/>
             <Route path="/courses" element={ <CourseList/> }/>
             <Route path="/profiles" element={ <ProfileList/> }/>
-            {/*<Route path="/profile/:id" element={ <ProfileList/> }/> eventually: dynamic route for individual profiles*/}
+            {/*<Route path="/profile/:id" element={ <ProfileView/> }/> eventually: dynamic route for individual profiles*/}
         </Routes>
     );
 }
