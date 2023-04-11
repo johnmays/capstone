@@ -25,7 +25,7 @@ export const Register = (props) => {
             //props.onFormSwitch("profile-creation", {name});
             //<Navigate to='/createprofile'/>
             //, state={name}
-            navigate('/createprofile', {state:{name:'fart'}})
+            navigate('/createprofile', {state:{name:name}})
         } 
     }
 
