@@ -54,6 +54,7 @@ export const ProfileCreation = (props) => {
     };
   
     let data = JSON.stringify(user);
+    console.log(data);
   
     let config = {
       method: 'post',

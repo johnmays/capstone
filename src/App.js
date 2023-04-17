@@ -31,8 +31,8 @@ const App = () => {
         <Routes>
             <Route path="/" element={ <Login/> }/>
             <Route path="/login" element={ <Login/> }/>
-            <Route path="/register" element={ <Register/> }/>
-            <Route path="/createprofile" element={ <ProfileCreation/> }/>
+            <Route path="/register" element={ <Register setUserName={getUserName} setUserEmail={getUserEmail} /> }/>
+            <Route path="/createprofile" element={ <ProfileCreation userEmail={userEmail}/>}/>
             <Route path="/courses" element={ <CourseList/> }/>
             <Route path="/profiles" element={ <ProfileList/> }/>
             {/*<Route path="/profile/:id" element={ <ProfileView/> }/> eventually: dynamic route for individual profiles*/}
