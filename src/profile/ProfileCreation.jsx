@@ -150,7 +150,7 @@ export const ProfileCreation = (props) => {
                 )}
               </div>
               
-                <button className="register-btn" type="submit">Register</button>
+                <button className="register-btn" type="submit" onClick={() => navigate('/profile/'+id)}>Register</button>
             </form>
         
         </div>

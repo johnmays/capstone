@@ -7,6 +7,8 @@ import { ProfileCreation } from "./profile/ProfileCreation";
 import { ProfileView } from "./profile/ProfileView";
 import { ProfileList } from "./listings/ProfileList";
 import { CourseList } from "./listings/CourseList";
+import { AdminLogin } from "./admin/AdminLogin";
+import { Admin } from "./admin/Admin";
 
 
 const App = () => {
@@ -36,6 +38,8 @@ const App = () => {
             <Route path="/courses" element={ <CourseList/> }/>
             <Route path="/profiles" element={ <ProfileList setUserId={getUserId}/> }/>
             <Route path="/profile/1" element={ <ProfileView/> }/>
+            <Route path="/adminlogin" element={ <AdminLogin/> }/>
+            <Route path="/admin" element={ <Admin/> }/>
         </Routes>
     );
 }
