@@ -136,6 +136,10 @@ h1, h3, p{
 
   #bio-cont{
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
 
   #edit-profile-cont{
