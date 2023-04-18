@@ -139,7 +139,7 @@ h1, h3, p{
   }
 
   #edit-profile-cont{
-    width: 200px; /* adjust the width to your liking */
+    width: 200px;
     margin: 0 auto;
   }
 
@@ -149,4 +149,15 @@ h1, h3, p{
 
   #edit-profile-cont:hover{
     cursor: pointer;
+  }
+
+  #location-sec{
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    margin-top: 50px;
+  }
+
+  .section-header{
+    text-align: center;
   }

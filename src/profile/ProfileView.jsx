@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./profileViewStyle.css";
 import axios from 'axios';
+import Map from './Map';
 
 
 export const ProfileView = (props) => {
@@ -48,7 +49,7 @@ export const ProfileView = (props) => {
 
             <div id="personal-info">
                 <div className="section">
-                    <p>My skills include:</p>
+                    <h3 className="section-header">My skills include:</h3>
                     <ul id="listed-skills">
                         {userData.skills.map((Skill, index) => (
                         <li key={index}>
@@ -58,12 +59,14 @@ export const ProfileView = (props) => {
                     </ul>
                 </div>
 
-                <div id="bio-cont"> 
-                    <p className="section">{userData.bio}</p>
+                <div className="section" id="bio-cont"> 
+                    <h3 className="section-header">My Bio:</h3>
+                    <p >{userData.bio}</p>
                 </div>
                 
-                <div> 
-                    <p className="section">{userData.zip + " " + userData.city + ", " + userData.state}</p>
+                <div className="section" id="location-sec"> 
+                    <h3 className="section-header">My Location: {userData.zip + " " + userData.city + ", " + userData.state}</h3>
+                    <Map zip="44106" city="Cleveland" state="Ohio" />
                 </div>
 
             </div>

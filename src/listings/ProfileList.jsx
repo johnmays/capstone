@@ -1,13 +1,14 @@
 import React, { useState, useEffect} from "react";
 import "./ListingsStyle.css";
 import axios from "axios";
+import { useNavigate, Navigate } from "react-router-dom";
 
 export const ProfileList = (props) => {
   const [data, setData] = useState([]);
 
   const viewProfile = (id) => {
-    props.onFormSwitch("profile-view");
-    props.setUserId(id);
+    Navigate('/profile/' + id);
+    //props.setUserId(id);
   }  
 
   useEffect(() => {
