@@ -49,6 +49,10 @@ h1, h3, p{
     padding: 4px;
   }
 
+  #hamburger:hover{
+    cursor: pointer;
+  }
+
   #personal-info{
     padding-left: 100px;
     padding-right: 100px;

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./profileViewStyle.css";
 import axios from 'axios';
 import Map from './Map';
 
-
 export const ProfileView = (props) => {
     const [userData, setData] = useState({ skills: [] });
     const { id } = useParams() // will return id element in URL
+    const navigate = useNavigate();
 
     useEffect(() => {
         const url = "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/" + props.userId;
@@ -19,9 +19,13 @@ export const ProfileView = (props) => {
           .catch(error => console.log(error));
       }, []);
 
+      const handleHamburgerClick = () => {
+        navigate("/profiles");
+    };
+
     return (
         <div id="bkg-profile-view">
-            <img onClick={() =>{props.onFormSwitch("profile-list")}} id="hamburger" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Hamburger_icon_white.svg/1024px-Hamburger_icon_white.svg.png?20190820131613"></img>
+            <img onClick={handleHamburgerClick} id="hamburger" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Hamburger_icon_white.svg/1024px-Hamburger_icon_white.svg.png?20190820131613"></img>
             
             <div id="header-bkg">
                 <div id="profile-header">
