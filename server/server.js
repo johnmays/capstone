@@ -11,35 +11,6 @@ const pool = new Pool(pg_config);
 const express = require('express');
 const app = express();
 const port = 8050;
-const cors = require('cors');
-app.use(cors({
-    origin: '*'
-}));
-
-/* --------------------------------- */
-/*       SWAGGER DOCUMENTATION SETUP */
-/* --------------------------------- */
-const swaggerJSDoc = require('swagger-jsdoc')
-const swaggerUI = require('swagger-ui-express')
-
-const options = {
-    definition:{
-        openapi: '3.0.0',
-        info:{
-            title: 'HubHyve',
-            version: '1.0.0'
-        },
-        servers:[
-            {
-                url: 'http://localhost:8050/'
-            }
-        ]
-    },
-    apis: ['capstone/server/server.js']
-}
-
-const swaggerSpecification = swaggerJSDoc(options)
-app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpecification))
 
 
 /* --------------------------------- */
@@ -99,23 +70,23 @@ const deleteUser = (req, res) => {
  * Returns the full user object, including the user's newly created ID.
  */
 const createUser = (req, res) => {
+    let random_id = Math.floor(Math.random() * 1000000); // TEMP FIX
     const columnNames = [
         'first_name',
         'middle_initial',
         'last_name',
-        'email',
         'profile_img',
         'bio',
         'city',
         'state',
         'zip',
-        'skills'
+        'skills',
+        'title'
     ];
 
     const requiredCols = [
         'first_name',
         'last_name',
-        'email',
         'city',
         'state',
         'zip'
@@ -129,7 +100,7 @@ const createUser = (req, res) => {
             text: `INSERT INTO "user"(${columnNames.join(',')})
                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
                    RETURNING *`,
-            values: queryVals
+            values: [random_id, ...queryVals]
         };
     
         pool.query(query, (err, result) => {
@@ -141,7 +112,6 @@ const createUser = (req, res) => {
             }
         });
     }
-    
 }
 
 /**
@@ -251,6 +221,10 @@ const getCoursesByField = (req, res) => {
 /* --------------------------------- */
 /*     MIDDLEWARE/INPUT HANDLING     */
 /* --------------------------------- */
+const cors = require('cors');
+app.use(cors({
+    origin: '*'
+}));
 app.use(express.json());
 
 /**
