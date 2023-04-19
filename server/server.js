@@ -97,7 +97,7 @@ const createUser = (req, res) => {
         const queryVals = columnNames.map(col => params[col]);
         const query = {
             name: 'create_user',
-            text: `INSERT INTO "user"(${columnNames.join(',')})
+            text: `INSERT INTO "user"(user_id, ${columnNames.join(',')})
                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
                    RETURNING *`,
             values: [random_id, ...queryVals]
