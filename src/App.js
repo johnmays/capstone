@@ -34,10 +34,10 @@ const App = () => {
             <Route path="/" element={ <Login/> }/>
             <Route path="/login" element={ <Login/> }/>
             <Route path="/register" element={ <Register setUserName={getUserName} setUserEmail={getUserEmail} /> }/>
-            <Route path="/createprofile" element={ <ProfileCreation userEmail={userEmail}/>}/>
+            <Route path="/createprofile" element={ <ProfileCreation setUserId={getUserId} setUserEmail={getUserEmail} userEmail={userEmail}/>}/>
             <Route path="/courses" element={ <CourseList/> }/>
             <Route path="/profiles" element={ <ProfileList setUserId={getUserId}/> }/>
-            <Route path="/profile/1" element={ <ProfileView/> }/>
+            <Route path={"/profile/" + userId} element={ <ProfileView userId={userId}/> }/>
             <Route path="/adminlogin" element={ <AdminLogin/> }/>
             <Route path="/admin" element={ <Admin/> }/>
         </Routes>

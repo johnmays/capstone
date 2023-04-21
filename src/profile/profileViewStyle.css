@@ -72,6 +72,10 @@ h1, h3, p{
     padding: 8px;
   }
 
+  .side-section{
+    width: 25%;
+  }
+
   .badge{
     width: 50px;
     height: 50px;
@@ -139,7 +143,6 @@ h1, h3, p{
   }
 
   #bio-cont{
-    width: 50%;
     display: flex;
     flex-direction: column;
     padding-top: 30px;

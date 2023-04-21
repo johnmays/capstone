@@ -5,20 +5,14 @@ import { useNavigate, Navigate } from "react-router-dom";
 
 export const ProfileList = (props) => {
   const [data, setData] = useState([]);
-
-  const viewProfile = (id) => {
-    Navigate('/profile/' + id);
-    //props.setUserId(id);
-  }  
+  const navigate = useNavigate();
 
   useEffect(() => {
     const urls = [
-      "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/1",
-      "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/2",
-      "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/3",
-      "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/4",
-      "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/5",
-      "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/6"
+      "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/985244",
+      "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/33570",
+      "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/874467",
+      "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/304703"
     ];
 
     const requests = urls.map(url => axios.get(url));
@@ -29,6 +23,11 @@ export const ProfileList = (props) => {
       })
       .catch(error => console.log(error));
   }, []);
+
+  const viewProfile = (id) => {
+    props.setUserId(id);
+    navigate('/profile/'+ id);
+  }
 
   return (
     <div>
@@ -44,7 +43,7 @@ export const ProfileList = (props) => {
                 
                 <div id="profile-info">
                     <h1>{profile.first_name} {profile.last_name}</h1>
-                    <h3>Neurologist</h3>
+                    <h3>{profile.title}</h3>
                     <h3>{profile.email}</h3>
                     <h3>Phone: insert</h3>
                     <h3>{profile.city}, {profile.state} {profile.zip}</h3>

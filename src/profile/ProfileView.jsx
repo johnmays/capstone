@@ -3,17 +3,28 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./profileViewStyle.css";
 import axios from 'axios';
 import Map from './Map';
+import { Buffer } from 'buffer';
 
 export const ProfileView = (props) => {
     const [userData, setData] = useState({ skills: [] });
+    const [profImg, setProfImg] = useState();
     const { id } = useParams() // will return id element in URL
     const navigate = useNavigate();
+    var decodedData;
+    
 
     useEffect(() => {
         const url = "http://ec2-3-144-101-12.us-east-2.compute.amazonaws.com:8050/getUser/id/" + props.userId;
         axios.get(url)
           .then(response => {
             const newData = response.data;
+            console.log("image data" + response.data.profile_img.data);
+            const uint8Array = new Uint8Array(response.data.profile_img.data); // Convert to Uint8Array
+            const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
+            console.log(base64String);
+            //const imgData = Buffer.from(response.data.profile_img.data).toString('base64');
+            //const img = `data:image/png;base64,${imgData}`;
+            setProfImg(base64String);
             setData(newData);
           })
           .catch(error => console.log(error));
@@ -30,12 +41,12 @@ export const ProfileView = (props) => {
             <div id="header-bkg">
                 <div id="profile-header">
                     <div>
-                        <img id="prof-img" src="https://via.placeholder.com/350x150"></img>
+                    <   img id="prof-img" src={`data:image/png;base64,${profImg}`} alt="Image 1" />
                     </div>
                     
                     <div id="header-info">
                         <h1>{userData.first_name + " " + userData.last_name}</h1>
-                        <h3>Neurologist</h3>
+                        <h3>{userData.title}</h3>
                         <h3>{userData.email}</h3>
                         <h3>Phone: +1 111-111-1111</h3>
                     </div>
@@ -52,7 +63,7 @@ export const ProfileView = (props) => {
             </div>
 
             <div id="personal-info">
-                <div className="section">
+                <div className="section side-section">
                     <h3 className="section-header">My skills include:</h3>
                     <ul id="listed-skills">
                         {userData.skills.map((Skill, index) => (
@@ -63,14 +74,14 @@ export const ProfileView = (props) => {
                     </ul>
                 </div>
 
-                <div className="section" id="bio-cont"> 
-                    <h3 className="section-header">My Bio:</h3>
-                    <p >{userData.bio}</p>
-                </div>
-                
                 <div className="section" id="location-sec"> 
                     <h3 className="section-header">My Location: {userData.zip + " " + userData.city + ", " + userData.state}</h3>
-                    <Map zip="44106" city="Cleveland" state="Ohio" />
+                    <Map zip={userData.zip} city={userData.city} state={userData.state} />
+                </div>
+
+                <div className="section side-section" id="bio-cont"> 
+                    <h3 className="section-header">My Bio:</h3>
+                    <p>{userData.bio}</p>
                 </div>
 
             </div>

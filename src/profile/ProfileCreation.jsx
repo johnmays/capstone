@@ -1,7 +1,7 @@
 import "./profileCreationStyle.css";
 import axios from 'axios';
 import React, { useState, useRef, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const ProfileCreation = (props) => {
   const [title, setTitle] = useState("");
@@ -14,6 +14,9 @@ export const ProfileCreation = (props) => {
   const [submitted, setSubmitted] = useState(false);
 
   const locState = useLocation();
+  const navigate = useNavigate();
+
+
 
   useEffect(() => {
     const options = {
@@ -37,20 +40,19 @@ export const ProfileCreation = (props) => {
 
     const names = locState.state.name.split(" ");
     const address = location.split(",");
-    console.log(address);
     const stateZip = address[1].trim().split(" ");
-    console.log(stateZip);
           
     const user = {
       first_name: names[0],
+      middle_initial: "",
       last_name: names[1],
-      email: props.userEmail,
       profile_img: image,
       bio: bio,
       city: address[0],
       state: stateZip[0],
       zip: stateZip[1],
       skills: Skills,
+      title: title,
     };
   
     let data = JSON.stringify(user);
@@ -70,7 +72,7 @@ export const ProfileCreation = (props) => {
       .then((response) => {
         console.log(JSON.stringify(response.data));
         props.setUserId(response.data.user_id);
-        props.onFormSwitch("profile-view");
+        navigate('/profile/'+ response.data.user_id);
       })
       .catch((error) => {
         console.log(error);
@@ -105,7 +107,7 @@ export const ProfileCreation = (props) => {
         <div className="auth-form-container">
             <form className="register-form" onSubmit={handleSubmit}>
                 <h2 id="welcome-msg">Hello, {locState.state.name}</h2>
-                <h3 id="welcome-sub">Tell us know more about yourself.</h3>
+                <h3 id="welcome-sub">Tell us more about yourself.</h3>
               
                 <label htmlFor="Title" >Title:</label>
                 <input value={title} onChange={(e) => setTitle(e.target.value)} id="title" placeholder="Neurologist"></input>
@@ -150,7 +152,7 @@ export const ProfileCreation = (props) => {
                 )}
               </div>
               
-                <button className="register-btn" type="submit" onClick={() => navigate('/profile/'+id)}>Register</button>
+                <button className="register-btn" type="submit">Register</button>
             </form>
         
         </div>
