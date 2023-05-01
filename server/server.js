@@ -130,6 +130,13 @@ const createCourse = (req, res) => {
         'cost_per_session'
     ];
 
+    const requiredCols = [
+        'instructor_id',
+        'title',
+        'field',
+        'cost_per_session'
+    ];
+
     const params = req.body;
     if (verifyCols(params, requiredCols, res)) {
         const queryVals = columnNames.map(col => params[col]);
@@ -236,7 +243,7 @@ app.use(express.json());
 const verifyCols = (body, required_cols, res) => {
     let missing_cols = required_cols.filter(col => body[col] == null);
     if (missing_cols.length) {
-        res.status(400).send(`Missing columns: ${missing_cols.join(' ,')}`);
+        res.status(400).send(`Missing columns: ${missing_cols.join(', ')}`);
         return false;
     }
     return true;
