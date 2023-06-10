@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gloock&family=Roboto:wght@100&family=Tilt+Warp&display=swap');
+
+#gradient-bkg{
+  text-align: center;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(79deg, #4cd1ae, #594fdc);
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  
+}
+
+ /* Set up the animation */
+ @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+
+h2 {
+    font-family: 'Verdana', sans-serif;
+    margin-bottom: 30px;
+}
+
+.auth-form-continer, .login-form, .register-form{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid white;
+  padding: 5rem;
+  border-radius: 10px;
+  margin: 20px;
+}
+
+label{
+    text-align: left;
+    padding: 0.25rem 0;
+}
+
+input{
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+}
+
+button{
+    border: none;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.login-btn{
+    margin-top: 20px;
+}
+
+.link-btn{
+    background: none;
+    color: white;
+    text-decoration: underline;
+}
+
+.empty::placeholder {
+    color: white;
+  }
+
+.empty{
+    outline: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+
+  
+ 
